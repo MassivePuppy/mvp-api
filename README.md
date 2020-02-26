@@ -24,6 +24,27 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+## Run with Docker
+
+### Build  Image
+
+```
+  docker build -t mvp-api-image .
+```
+
+### Start Container
+
+```
+  docker run --name mvp-api -p 3000:3000 -d mvp-api-image
+```
+
+### Notes
+
+- After starting the container the app needs some time to fully start up
+- On Windows machines localhost may not be working to access the container. Use the docker-machine ip instead.
+
+[Next step]: Docker-Compose Setup 
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
