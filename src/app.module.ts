@@ -6,7 +6,7 @@ import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://user:password@database:27017/mvp?authSource=admin',
+    MongooseModule.forRoot('mongodb://user:password@mongo:27017/mvp?authSource=admin',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
