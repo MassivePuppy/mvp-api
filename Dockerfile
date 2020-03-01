@@ -12,6 +12,8 @@ RUN npm install
 
 COPY --chown=node:node . .
 
+COPY ./.env.docker ./.env
+
 EXPOSE 3000
 
 CMD [ "npm", "run", "start" ]
