@@ -1,6 +1,11 @@
 import * as mongoose from 'mongoose';
 
 export const UserSchema = new mongoose.Schema({
-  name: String,
-  email: String
+  firstName: String,
+  lastName: String,
+  email: String,
+  password: String
+
+}, {
+  timestamps: true
 });
