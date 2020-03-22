@@ -19,17 +19,21 @@ export class UserService {
     createUserDto.password = await HashUtil.hash(createUserDto.password)
     delete createUserDto.passwordConfirmation
 
-    const createdUser = new this.userModel(createUserDto);
+    const createdUser = new this.userModel(createUserDto)
 
-    return createdUser.save();
+    return createdUser.save()
   }
 
   async getAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+    return this.userModel.find().exec()
   }
 
   async getById(_id: string): Promise<User> {
-    return this.userModel.find({ _id }).exec();
+    return this.userModel.findOne({ _id }).exec()
+  }
+
+  async getByEmail(email: string): Promise<User> {
+    return this.userModel.findOne({ email }).exec()
   }
 
   async updateById(_id: string, updateUserDto: UpdateUserDto): Promise<any> {

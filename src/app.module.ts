@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import configuration from './config/configuration';
 import { MongoUtil } from './utils/mongo';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { MongoUtil } from './utils/mongo';
       useNewUrlParser: true,
       useUnifiedTopology: true
     }),
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
