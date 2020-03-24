@@ -2,6 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { User } from 'src/user/interfaces/user.interface';
 import { UserService } from 'src/user/user.service';
+import { Roles } from 'src/constants/roles';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -18,7 +19,7 @@ export class RoleGuard implements CanActivate {
         const request = context.switchToHttp().getRequest()
     
         this.userService.getById(request.user._id).then((user: User) => {
-            resolve(user.roles.includes('ADMIN'))
+            resolve(user.roles.includes(Roles.ADMIN))
         })
     })
   }

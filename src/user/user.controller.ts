@@ -8,6 +8,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './interfaces/user.interface';
 import { UserService } from './user.service';
+import { Roles } from 'src/constants/roles';
 
 @ApiTags(Domains.USERS)
 @UseGuards(JwtAuthGuard)
@@ -17,7 +18,7 @@ export class UserController {
 
   @Get()
   @UseGuards(RoleGuard)
-  @Role('admin')
+  @Role(Roles.ADMIN)
   getAllUsers(): Promise<User[]> {
     return this.userService.getAll();
   }
@@ -29,7 +30,7 @@ export class UserController {
 
   @Post()
   @UseGuards(RoleGuard)
-  @Role('admin')
+  @Role(Roles.ADMIN)
   createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.create(createUserDto)
   }
@@ -40,7 +41,7 @@ export class UserController {
   }
 
   @UseGuards(RoleGuard)
-  @Role('admin')
+  @Role(Roles.ADMIN)
   @Delete(':id')
   remove(@Param('id') id: string): Promise<any> {
     return this.userService.deleteById(id)
