@@ -9,4 +9,5 @@ export interface User extends Document {
     readonly roles: string[]
     readonly createdAt: Date
     readonly updatedAt: Date
+    readonly isActive: Boolean
 }

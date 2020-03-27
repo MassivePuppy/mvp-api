@@ -11,13 +11,12 @@ import { UseRoles } from 'src/decorators/use-roles.decorator';
 import { AccessControlGuard } from 'src/auth/guards/access-control.guard';
 
 @ApiTags(Domains.USERS)
-@UseGuards(JwtAuthGuard)
 @Controller(Domains.USERS)
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Get()
-  @UseGuards(AccessControlGuard)
+  @UseGuards(JwtAuthGuard, AccessControlGuard)
   @UseRoles({
     resource: Domains.USERS,
     action: 'read',
@@ -28,7 +27,7 @@ export class UserController {
   }
 
   @Get(':id')
-  @UseGuards(AccessControlGuard)
+  @UseGuards(JwtAuthGuard, AccessControlGuard)
   @UseRoles({
     resource: Domains.USERS,
     action: 'read',
@@ -44,13 +43,30 @@ export class UserController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard, AccessControlGuard)
+  @UseRoles({
+    resource: Domains.USERS,
+    action: 'update',
+    possession: 'own',
+  })
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<any> {
     return this.userService.updateById(id, updateUserDto)
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, AccessControlGuard)
+  @UseRoles({
+    resource: Domains.USERS,
+    action: 'delete',
+    possession: 'own',
+  })
   remove(@Param('id') id: string): Promise<any> {
     return this.userService.deleteById(id)
+  }
+
+  @Get('activate/:token')
+  activateUser(@Param('token') token: string): Promise<User> {
+    return this.userService.activateUser(token)
   }
 
 }

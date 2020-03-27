@@ -17,10 +17,4 @@ export class AppController {
     return this.authService.login(req.user)
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('auth/authenticated')
-  async getAuthenticated(@Request() req) {
-    return 'You are successfully authenticated with the API'
-  }
-
 }
