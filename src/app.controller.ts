@@ -1,10 +1,12 @@
-import { Controller, UseGuards, Post, Request, Get } from '@nestjs/common';
+import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
-import { LocalAuthGuard } from './auth/guards/local-auth.guard';
 import { AuthService } from './auth/auth.service';
-import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { LocalAuthGuard } from './auth/guards/local-auth.guard';
+import { Domains } from './constants/domains';
 
-@Controller()
+@Controller(Domains.APP)
+@ApiTags(Domains.APP)
 export class AppController {
   constructor(
     private readonly appService: AppService,
