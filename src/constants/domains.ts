@@ -1,4 +1,5 @@
 export const Domains = {
+    APP: 'app',
     USERS: 'users',
-    APP: 'app'
+    TRAINING_PLANS: 'trainingplans'
 }

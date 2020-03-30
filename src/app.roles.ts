@@ -14,4 +14,10 @@ ac.grant(Roles.USER)
     .updateOwn(Domains.USERS)
     .deleteOwn(Domains.USERS)
 
+ac.grant(Roles.USER)
+    .readAny(Domains.TRAINING_PLANS)
+    .create(Domains.TRAINING_PLANS)
+    .updateOwn(Domains.TRAINING_PLANS)
+    .deleteOwn(Domains.TRAINING_PLANS)
+
 export default ac

@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import configuration from './config/configuration';
 import { MongoUtil } from './utils/mongo';
 import { AuthModule } from './auth/auth.module';
+import { TrainingPlanModule } from './trainingplan/trainingplan.module'
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { AuthModule } from './auth/auth.module';
       useUnifiedTopology: true
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    TrainingPlanModule,
   ],
   controllers: [AppController],
   providers: [AppService],

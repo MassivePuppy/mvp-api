@@ -5,7 +5,7 @@ import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/guards/local-auth.guard';
 import { Domains } from './constants/domains';
 
-@Controller(Domains.APP)
+@Controller()
 @ApiTags(Domains.APP)
 export class AppController {
   constructor(
@@ -14,7 +14,7 @@ export class AppController {
   ) {}
 
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
+  @Post('login')
   async login(@Request() req) {
     return this.authService.login(req.user)
   }

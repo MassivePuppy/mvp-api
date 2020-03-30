@@ -4,7 +4,8 @@ import { User } from 'src/user/interfaces/user.interface';
 export class PosessionService {
 
     private readonly mapping = {
-        users: this.ownsUser
+        users: this.ownsUser,
+        trainingplans: this.ownsTrainingPlan
     }
 
     constructor() { }
@@ -22,5 +23,9 @@ export class PosessionService {
         const requestingUserId = String(user._id)
 
         return requestedUserId === requestingUserId
+    }
+
+    ownsTrainingPlan(user: User, request: any) {
+        return true
     }
 }
