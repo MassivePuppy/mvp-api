@@ -1,14 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
+import { AccessControlGuard } from 'src/auth/guards/access-control.guard';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Domains } from 'src/constants/domains';
+import { UseRoles } from 'src/decorators/use-roles.decorator';
 import { CreateTrainingPlanDto } from './dto/create-trainingplan.dto';
 import { UpdateTrainingPlanDto } from './dto/update-trainingplan.dto';
 import { TrainingPlan } from './interfaces/trainingplan.interface';
 import { TrainingPlanService } from './trainingplan.service';
-import { Roles } from 'src/constants/roles';
-import { UseRoles } from 'src/decorators/use-roles.decorator';
-import { AccessControlGuard } from 'src/auth/guards/access-control.guard';
 
 @ApiTags(Domains.TRAINING_PLANS)
 @Controller(Domains.TRAINING_PLANS)
@@ -38,8 +38,9 @@ export class TrainingPlanController {
   }
 
   @Post()
-  create(@Body() createTrainingPlanDto: CreateTrainingPlanDto): Promise<TrainingPlan> {
-    return this.trainingPlanService.create(createTrainingPlanDto)
+  @UseGuards(JwtAuthGuard)
+  create(@Req() request: Request, @Body() createTrainingPlanDto: CreateTrainingPlanDto): Promise<TrainingPlan> {
+    return this.trainingPlanService.createForUserId(createTrainingPlanDto, request.user['_id'])
   }
 
   @Put(':id')

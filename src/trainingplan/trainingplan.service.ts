@@ -11,8 +11,8 @@ export class TrainingPlanService {
     @InjectModel('TrainingPlan') private readonly trainingPlanModel: Model<TrainingPlan>
   ) { }
 
-  async create(createTrainingPlanDto: CreateTrainingPlanDto): Promise<TrainingPlan> {
-    return new this.trainingPlanModel().save()
+  async createForUserId(createTrainingPlanDto: CreateTrainingPlanDto, userId: String): Promise<TrainingPlan> {
+    return new this.trainingPlanModel({ userId, ...createTrainingPlanDto }).save()
   }
 
   async getAll(): Promise<TrainingPlan[]> {

@@ -5,6 +5,7 @@ export const TrainingPlanSchema = new mongoose.Schema({
   description: String,
   duration: Number,
   intensity: Number,
+  userId: String
 }, {
   timestamps: true
 });
