@@ -38,7 +38,12 @@ export class TrainingPlanController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, AccessControlGuard)
+  @UseRoles({
+    resource: Domains.TRAINING_PLANS,
+    action: 'create',
+    possession: 'any',
+  })
   create(@Req() request: Request, @Body() createTrainingPlanDto: CreateTrainingPlanDto): Promise<TrainingPlan> {
     return this.trainingPlanService.createForUserId(createTrainingPlanDto, request.user['_id'])
   }

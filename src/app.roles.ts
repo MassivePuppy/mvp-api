@@ -14,9 +14,15 @@ ac.grant(Roles.USER)
     .updateOwn(Domains.USERS)
     .deleteOwn(Domains.USERS)
 
+ac.grant(Roles.ADMIN)
+    .readAny(Domains.TRAINING_PLANS)
+    .createAny(Domains.TRAINING_PLANS)
+    .updateAny(Domains.TRAINING_PLANS)
+    .deleteAny(Domains.TRAINING_PLANS)
+
 ac.grant(Roles.USER)
     .readAny(Domains.TRAINING_PLANS)
-    .create(Domains.TRAINING_PLANS)
+    .createAny(Domains.TRAINING_PLANS)
     .updateOwn(Domains.TRAINING_PLANS)
     .deleteOwn(Domains.TRAINING_PLANS)
 

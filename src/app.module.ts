@@ -8,6 +8,7 @@ import configuration from './config/configuration';
 import { MongoUtil } from './utils/mongo';
 import { AuthModule } from './auth/auth.module';
 import { TrainingPlanModule } from './trainingplan/trainingplan.module'
+import { PosessionModule } from './posession/posession.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TrainingPlanModule } from './trainingplan/trainingplan.module'
     UserModule,
     AuthModule,
     TrainingPlanModule,
+    PosessionModule
   ],
   controllers: [AppController],
   providers: [AppService],

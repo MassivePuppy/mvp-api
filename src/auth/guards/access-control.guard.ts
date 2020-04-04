@@ -5,52 +5,54 @@ import { Role } from 'src/role.interface';
 import ac from 'src/app.roles';
 import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/interfaces/user.interface';
-import { PosessionService } from 'src/utils/posession.service';
+import { PosessionService } from 'src/posession/posession.service';
 
 @Injectable()
 export class AccessControlGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
-    private readonly userService: UserService
-  ) {}
+    private readonly userService: UserService,
+    private readonly posessionService: PosessionService
+  ) { }
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
-
-    const posessionService: PosessionService = new PosessionService();
-
     return new Promise((resolve, reject) => {
-        const roles = this.reflector.get<Role[]>('roles', context.getHandler())
+      const roles = this.reflector.get<Role[]>('roles', context.getHandler())
 
-        if (!roles) {
-          resolve(true)
+      if (!roles) {
+        resolve(true)
+      }
+
+      const request = context.switchToHttp().getRequest()
+
+      this.userService.getById(request.user._id).then((user: User) => {
+        if (user.roles.length < 1) {
+          return resolve(false)
         }
-    
-        const request = context.switchToHttp().getRequest()
-        this.userService.getById(request.user._id).then((user: User) => {
 
-            if (user.roles.length < 1) {
-                return resolve(false)
-            }
+        let roleChecks: Promise<boolean>[] = []
 
-            const hasRoles = roles.every((role: Role) => {
-                const clonedRole = { ...role }
+        roles.forEach((role: Role) => {
+          roleChecks.push(new Promise((resolve, reject) => {
+            const clonedRole = { ...role }
+            
+            this.posessionService.checkPosession(clonedRole, user, request).then(isOwner => {
+              if (!isOwner) {
+                clonedRole.possession = 'any'
+              }
 
-                if (clonedRole.possession === 'own') {
-                  const isOwner = posessionService.checkPosession(clonedRole, user, request)
+              const queryInfo: IQueryInfo = clonedRole
+              queryInfo.role = user.roles
 
-                  if (!isOwner) {
-                    clonedRole.possession = 'any'
-                  }
-                }
-
-                const queryInfo: IQueryInfo = clonedRole
-                queryInfo.role = user.roles
-
-                return ac.permission(queryInfo).granted
+              resolve(ac.permission(queryInfo).granted)
             })
-
-            resolve(hasRoles)
+          }))
         })
+
+        Promise.all(roleChecks).then(results => {
+          resolve(results.every(result => result))
+        })
+      })
     })
   }
 }

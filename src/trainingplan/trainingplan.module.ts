@@ -14,6 +14,6 @@ import { UserModule } from 'src/user/user.module';
   ],
   controllers: [TrainingPlanController],
   providers: [TrainingPlanService],
-  exports: []
+  exports: [TrainingPlanService]
 })
 export class TrainingPlanModule {}
