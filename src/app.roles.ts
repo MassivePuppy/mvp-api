@@ -21,7 +21,7 @@ ac.grant(Roles.ADMIN)
     .deleteAny(Domains.TRAINING_PLANS)
 
 ac.grant(Roles.USER)
-    .readAny(Domains.TRAINING_PLANS)
+    .readOwn(Domains.TRAINING_PLANS)
     .createAny(Domains.TRAINING_PLANS)
     .updateOwn(Domains.TRAINING_PLANS)
     .deleteOwn(Domains.TRAINING_PLANS)

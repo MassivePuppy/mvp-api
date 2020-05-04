@@ -1,14 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { Request } from 'express';
-import { AccessControlGuard } from 'src/auth/guards/access-control.guard';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { Domains } from 'src/constants/domains';
-import { UseRoles } from 'src/decorators/use-roles.decorator';
-import { CreateTrainingPlanDto } from './dto/create-trainingplan.dto';
-import { UpdateTrainingPlanDto } from './dto/update-trainingplan.dto';
-import { TrainingPlan } from './interfaces/trainingplan.interface';
-import { TrainingPlanService } from './trainingplan.service';
+import {Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards} from '@nestjs/common';
+import {ApiTags} from '@nestjs/swagger';
+import {Request} from 'express';
+import {AccessControlGuard} from 'src/auth/guards/access-control.guard';
+import {JwtAuthGuard} from 'src/auth/guards/jwt-auth.guard';
+import {Domains} from 'src/constants/domains';
+import {UseRoles} from 'src/decorators/use-roles.decorator';
+import {CreateTrainingPlanDto} from './dto/create-trainingplan.dto';
+import {UpdateTrainingPlanDto} from './dto/update-trainingplan.dto';
+import {TrainingPlan} from './interfaces/trainingplan.interface';
+import {TrainingPlanService} from './trainingplan.service';
 
 @ApiTags(Domains.TRAINING_PLANS)
 @Controller(Domains.TRAINING_PLANS)
@@ -31,7 +31,7 @@ export class TrainingPlanController {
   @UseRoles({
     resource: Domains.TRAINING_PLANS,
     action: 'read',
-    possession: 'any',
+    possession: 'own',
   })
   findOne(@Param('id') id: string): Promise<TrainingPlan> {
     return this.trainingPlanService.getById(id)
